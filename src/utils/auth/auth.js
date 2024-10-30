@@ -124,16 +124,24 @@ export const SignInWithGoogle = async () => {
     }
 }
 
-const LogOut = async () => {
+    const LogOut = async () => {
+ 
     try {
-        await auth.signOut()
-        localStorage.setItem('userLoggedIn', false)
-        localStorage.removeItem('userUID')
-        return redirect('/')
+        await auth.signOut();
+        localStorage.setItem('userLoggedIn', false);
+        localStorage.removeItem('userUID');
+
+        // Verifique se o usuário realmente saiu
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+            redirect('/'); // Redireciona apenas se o usuário estiver desconectado
+        }
     } catch (err) {
-        console.error(err)
+        console.error(err);
+    } finally {
+        return false
     }
-}
+};
 
 export const isLoggedIn = () => {
     return userLoggedIn

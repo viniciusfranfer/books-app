@@ -70,7 +70,7 @@ function AddBook() {
         titulo: '',
         autor: '',
         genero: '',
-        status: '',
+        status: 'Lendo',
         nota: '',
         review: '',
     });
@@ -88,8 +88,7 @@ function AddBook() {
             await bookDAO.incluir(currentUser.uid, bookData, img);
             console.log('Livro adicionado com sucesso!');
     
-            // Resetando os campos
-            setBookData({ titulo: '', autor: '', genero: '', status: 'Lendo', nota: '', review: '' });
+            setBookData({ titulo: '', autor: '', genero: '', status: '', nota: '', review: '' });
             setCoverPic(null);
             setImg(null);
         } catch (error) {

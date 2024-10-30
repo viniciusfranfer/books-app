@@ -1,8 +1,7 @@
-import { getDatabase, ref, query, orderByChild, equalTo, get, set, remove } from "firebase/database";
-import { v4 as uuidv4 } from 'uuid';
-import ModelError from "./ModelError.js";
+import { getDatabase, ref, get, set, push, update, remove } from "firebase/database";
 import BookList from "./BookList.js";
-import BookListDTO from "./BookListDTO.js";
+import Book from "./Book.js";
+import ModelError from "./ModelError.js";
 
 export default class BookListDAO {
     static promessaConexao = null;
@@ -22,92 +21,68 @@ export default class BookListDAO {
         return BookListDAO.promessaConexao;
     }
 
-    async obterListaPeloID(id) {
+    async obterListas(userId) {
         let connectionDB = await this.obterConexao();
-        return new Promise((resolve) => {
-            let dbRefLista = ref(connectionDB, 'listas/' + id);
-            let consulta = query(dbRefLista);
-            let resultPromise = get(consulta);
-            resultPromise.then(dataSnapshot => {
-                let lista = dataSnapshot.val();
-                if (lista != null) {
-                    resolve(new BookList(lista.id, lista.nome, lista.livros));
-                } else {
-                    resolve(null);
-                }
-            });
-        });
-    }
-
-    async obterListas() {
-        let connectionDB = await this.obterConexao();
-        return new Promise((resolve) => {
-            let conjListas = [];
-            let dbRefListas = ref(connectionDB, 'listas');
-            let paramConsulta = orderByChild('nome');
-            let consulta = query(dbRefListas, paramConsulta);
-            let resultPromise = get(consulta);
-            resultPromise.then(dataSnapshot => {
-                dataSnapshot.forEach(dataSnapshotObj => {
-                    let elem = dataSnapshotObj.val();
-                    // A partir do snapshot, você precisa garantir que `elem.id`, `elem.nome`, e `elem.livros` existam
-                    conjListas.push(new BookList(elem.id, elem.nome, elem.livros || [])); // Corrigido para `elem.nome` e `elem.livros`
-                });
-                resolve(conjListas);
-            }, (e) => console.log("#" + e));
-        });
-    }
-    
-
-
-    async incluir(userId, bookListData) {
-        let connectionDB = await this.obterConexao();
-        const bookListId = uuidv4(); // Gera um novo ID para a lista
-    
         return new Promise((resolve, reject) => {
-            let dbRefLista = ref(connectionDB, `listas/${userId}/${bookListId}`);
-            
-            // Cria uma instância de BookList antes de passar para BookListDTO
-            const bookList = new BookList(bookListId, bookListData.nome, bookListData.livros || []);
-            const bookListDTO = new BookListDTO(bookList); // Agora passa um objeto BookList
+            const dbRefListas = ref(connectionDB, `listas/${userId}`);
+            get(dbRefListas)
+                .then((snapshot) => {
+                    const listas = snapshot.exists() ? snapshot.val() : {};
+                    resolve(listas);
+                })
+                .catch(error => reject(error));
+        });
+    }
+
+    async obterLivrosDoUsuario(userId) {
+        let connectionDB = await this.obterConexao();
+        return new Promise((resolve, reject) => {
+            const dbRefLivros = ref(connectionDB, `livros/${userId}`);
+            get(dbRefLivros)
+                .then((snapshot) => {
+                    const livros = snapshot.exists() ? Object.values(snapshot.val()) : [];
+                    resolve(livros); // Retorna um array vazio se não houver livros
+                })
+                .catch(error => reject(error));
+        });
+    }
     
-            set(dbRefLista, bookListDTO)
-                .then(() => resolve(true))
+
+    async criarLista(userId, nomeLista) {
+        let connectionDB = await this.obterConexao();
+        return new Promise((resolve, reject) => {
+            const dbRefListas = ref(connectionDB, `listas/${userId}`);
+            const novaListaRef = push(dbRefListas);
+            const novaLista = { name: nomeLista, books: {} };
+
+            set(novaListaRef, novaLista)
+                .then(() => resolve({ id: novaListaRef.key, ...novaLista }))
                 .catch(erro => reject(erro));
         });
     }
-    
-    
-    
 
-    async alterar(userId, bookList) {
+    async atualizarLivrosDaLista(userId, listaId, livrosSelecionados) {
         let connectionDB = await this.obterConexao();
         return new Promise((resolve, reject) => {
-            // Usa o método getIdLista() para obter o ID da lista
-            const bookListId = bookList.getIdLista();
-            
-            if (!bookListId) {
-                reject(new ModelError("ID da lista é obrigatório"));
-                return;
-            }
-    
-            let dbRefLista = ref(connectionDB, `listas/${userId}/${bookListId}`);
-            let setPromise = set(dbRefLista, new BookListDTO(bookList));
-            setPromise.then(() => resolve(true)).catch(erro => reject(erro));
+            const updates = {};
+            Object.keys(livrosSelecionados).forEach((bookId) => {
+                updates[`listas/${userId}/${listaId}/books/${bookId}`] = livrosSelecionados[bookId] ? true : null;
+            });
+
+            update(ref(connectionDB), updates)
+                .then(() => resolve(true))
+                .catch(error => reject(error));
         });
     }
 
-    async excluir(userId, bookList) {
-        let connectionDB = await this.obterConexao();
+    async excluirLista(userId, listId) {
+        const connectionDB = await this.obterConexao();
         return new Promise((resolve, reject) => {
-            if (!bookList.id) {
-                reject(new ModelError("ID da lista é obrigatório"));
-                return;
-            }
-
-            let dbRefLista = ref(connectionDB, `listas/${userId}/${bookList.id}`);
-            let removePromise = remove(dbRefLista);
-            removePromise.then(() => resolve(true)).catch(erro => reject(erro));
+            const dbRefLista = ref(connectionDB, `listas/${userId}/${listId}`);
+            remove(dbRefLista)
+                .then(() => resolve(true))
+                .catch(error => reject(error));
         });
     }
+
 }

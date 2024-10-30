@@ -27,19 +27,22 @@ export default class BookDAO {
 
     async obterLivroPeloID(userId, id) {
         let connectionDB = await this.obterConexao();
-        return new Promise((resolve) => {
-            let dbRefLivro = ref(connectionDB, `livros/${userId}/${id}`);
-            let consulta = query(dbRefLivro);
-            let resultPromise = get(consulta);
-            resultPromise.then(dataSnapshot => {
-                let livro = dataSnapshot.val();
-                if (livro != null)
-                    resolve(new Book(livro.id, livro.titulo, livro.autor, livro.genero, livro.status, livro.nota, livro.review, livro.imagem));
-                else
-                    resolve(null);
-            });
+        return new Promise((resolve, reject) => {
+            const dbRefLivro = ref(connectionDB, `livros/${userId}/${id}`);
+            get(dbRefLivro)
+                .then((dataSnapshot) => {
+                    const livro = dataSnapshot.val();
+                    if (livro) {
+                        resolve(livro); // Retorna os dados brutos do livro
+                    } else {
+                        reject(new ModelError("Livro não encontrado."));
+                    }
+                })
+                .catch((error) => reject(error));
         });
     }
+    
+    
     
     
 
@@ -80,6 +83,24 @@ export default class BookDAO {
         });
     }
 
+    async obterLivrosDoUsuario(userId) {
+        let connectionDB = await this.obterConexao();
+        return new Promise((resolve, reject) => {
+            const dbRef = ref(connectionDB, `livros/${userId}`);
+            get(dbRef)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        const booksList = data ? Object.values(data) : [];
+                        resolve(booksList);
+                    } else {
+                        resolve([]);
+                    }
+                })
+                .catch((error) => reject(error));
+        });
+    }
+    
     async incluir(userId, livroData, img) {
         let connectionDB = await this.obterConexao();
         const livroId = uuidv4(); 

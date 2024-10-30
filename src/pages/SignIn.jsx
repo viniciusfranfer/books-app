@@ -91,11 +91,8 @@ const SignIn = () => {
                 senha: '',
                 confirmacao: ''
             })
-            // setIsSigningIn(false)
-            // setTimeout(() => {
-            //     navigate('/home')
-            // }, 1000)
         }
+        
     }, [notifications, navigate])
 
     const notify = (message, type) => {

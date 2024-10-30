@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getDatabase, ref, get, remove } from 'firebase/database';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useAuth } from '../utils/context/authContext/index';
 import NavBar from '../components/NavBar';
@@ -32,27 +31,29 @@ export default function Book() {
     useEffect(() => {
         const fetchBookData = async () => {
             if (currentUser && id) {
-                const db = getDatabase();
-                const bookRef = ref(db, `livros/${currentUser.uid}/${id}`);
-                const snapshot = await get(bookRef);
-                if (snapshot.exists()) {
-                    const bookData = snapshot.val();
-                    setBook(bookData);
-                    setTitulo(bookData.titulo);
-                    setAutor(bookData.autor);
-                    setGenero(bookData.genero);
-                    setStatus(bookData.status);
-                    setNota(bookData.nota);
-                    setReview(bookData.review);
-                    setImagem(bookData.imagem);
-                } else {
-                    console.log("Livro não encontrado.");
+                try {
+                    const bookData = await bookDAO.obterLivroPeloID(currentUser.uid, id);
+                    if (bookData) {
+                        setBook(bookData);
+                        setTitulo(bookData.titulo);
+                        setAutor(bookData.autor);
+                        setGenero(bookData.genero);
+                        setStatus(bookData.status);
+                        setNota(bookData.nota);
+                        setReview(bookData.review);
+                        setImagem(bookData.imagem);
+                    } else {
+                        console.log("Livro não encontrado.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar o livro:", error);
                 }
             }
         };
-
+    
         fetchBookData();
     }, [currentUser, id]);
+    
 
     const handleSave = async () => {
         if (currentUser && id) {

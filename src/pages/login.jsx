@@ -32,7 +32,6 @@ const LogIn = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        // console.log("Valores antes do login:", values); // Debugging
         if (!values.email || !values.senha) {
             setNotifications({
                 errors: {
@@ -80,7 +79,7 @@ const LogIn = () => {
     }, [notifications, navigate])    
 
     const notify = (message, type) => {
-        toast[type](<div className="toast-content"><span className="toast-icon">⚠️</span>{message}</div>, {
+        toast[type](<div className="toast-content">{message}</div>, {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: true,
@@ -149,7 +148,7 @@ const LogIn = () => {
                 <ToastContainer
                     position="top-center" // Mantém a posição no topo
                     autoClose={5000}
-                    hideProgressBar
+                    hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick={false}
                     rtl={false}

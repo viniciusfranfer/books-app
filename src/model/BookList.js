@@ -1,7 +1,9 @@
+import Book from './Book.js';
+
 class BookList {
-    #idLista; 
-    #livros;  
-    #nome;    
+    #idLista;
+    #nome;
+    #livros;
 
     constructor(idLista, nome, livros = []) {
         if (!idLista) throw new Error('ID da lista inválido');
@@ -10,6 +12,7 @@ class BookList {
         this.#livros = livros;
     }
 
+    // Getters
     getIdLista() {
         return this.#idLista;
     }
@@ -21,6 +24,8 @@ class BookList {
     getLivros() {
         return this.#livros;
     }
+
+    // Setters com validação
     setNome(nome) {
         if (!BookList.validarNome(nome)) {
             throw new Error('Nome inválido: ' + nome);
@@ -28,21 +33,23 @@ class BookList {
         this.#nome = nome;
     }
 
-    setLivros(livros) {
-        this.#livros = livros;
+    // Métodos de manipulação de livros
+    adicionarLivro(livro) {
+        if (livro instanceof Book) {
+            this.#livros.push(livro);
+        } else {
+            throw new Error("Objeto não é uma instância de Book");
+        }
     }
 
+    removerLivro(idLivro) {
+        this.#livros = this.#livros.filter(livro => livro.getId() !== idLivro);
+    }
+
+    // Método de validação
     static validarNome(nome) {
         return nome && nome.length >= 1 && nome.length <= 100;
     }
-
-    // adicionarLivro(livro) {
-    //     this.#livros.push(livro);
-    // }
-
-    // removerLivro(livroId) {
-    //     this.#livros = this.#livros.filter(livro => livro.getId() !== livroId);
-    // }
 }
 
 export default BookList;

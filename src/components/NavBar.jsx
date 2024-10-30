@@ -25,7 +25,7 @@ function NavBar() {
         <Link className='link' to="/home">inicio</Link>
         <Link className='link' to="/books">Livros</Link>
         <Link className='link' to="/bookList">Listas</Link>
-        <Link className='link' to="/profile">Profile</Link>
+        <Link className='link' to="/profile">Perfil</Link>
         <Link className='link' onClick={LogOut} to="/">Sair</Link>
       </ul>
     </nav>

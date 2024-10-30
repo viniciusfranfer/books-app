@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, set, get, push, update, remove } from 'firebase/database';
 import Modal from 'react-modal';
 import { useAuth } from '../utils/context/authContext/index';
 import NavBar from '../components/NavBar';
+import BookListDAO from '../model/BookListDAO'; // Certifique-se de importar o DAO
+
 import './styles/BookList.css';
 
 Modal.setAppElement('#root');
@@ -15,53 +16,40 @@ export default function BookList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBooks, setSelectedBooks] = useState({});
   const { currentUser } = useAuth();
+  const bookListDAO = new BookListDAO();
 
   useEffect(() => {
-    const fetchLists = async () => {
+    const fetchListsAndBooks = async () => {
       if (currentUser) {
-        const db = getDatabase();
-        const listsRef = ref(db, `listas/${currentUser.uid}`);
-        const snapshot = await get(listsRef);
-        if (snapshot.exists()) {
-          setLists(snapshot.val());
+        try {
+          const listsData = await bookListDAO.obterListas(currentUser.uid);
+          const booksData = await bookListDAO.obterLivrosDoUsuario(currentUser.uid);
+          setLists(listsData);
+          setBookData(booksData);
+        } catch (error) {
+          console.error("Erro ao carregar listas e livros:", error);
         }
       }
     };
-
-    const fetchBooks = async () => {
-      if (currentUser) {
-        const db = getDatabase();
-        const booksRef = ref(db, `livros/${currentUser.uid}`);
-        const snapshot = await get(booksRef);
-        if (snapshot.exists()) {
-          const booksList = snapshot.val() ? Object.values(snapshot.val()) : [];
-          setBookData(booksList);
-        }
-      }
-    };
-
-    fetchLists();
-    fetchBooks();
+    fetchListsAndBooks();
   }, [currentUser]);
 
   const handleCreateList = async () => {
     if (currentUser && listName.trim()) {
-      const db = getDatabase();
-      const listsRef = ref(db, `listas/${currentUser.uid}`);
-      const newListRef = push(listsRef);
-      const newListData = { name: listName, books: {} };
-
-      await set(newListRef, newListData);
-      const newListId = newListRef.key;
-
-      setLists((prevLists) => ({
-        ...prevLists,
-        [newListId]: newListData,
-      }));
-      
-      setListName('');
+      try {
+        const novaLista = await bookListDAO.criarLista(currentUser.uid, listName);
+        setLists((prevLists) => ({
+          ...prevLists,
+          [novaLista.id]: novaLista,
+        }));
+        setListName('');
+      } catch (error) {
+        console.error("Erro ao criar lista:", error);
+      }
     }
-  };
+  }
+
+  
 
   const handleOpenModal = (listId) => {
     setSelectedListId(listId);
@@ -83,38 +71,46 @@ export default function BookList() {
 
   const handleSaveBooks = async () => {
     if (currentUser && selectedListId) {
-        const db = getDatabase();
-        const updates = {};
-
-        Object.keys(selectedBooks).forEach((bookId) => {
-            if (selectedBooks[bookId]) {
-                updates[`listas/${currentUser.uid}/${selectedListId}/books/${bookId}`] = true;
-            } else {
-                updates[`listas/${currentUser.uid}/${selectedListId}/books/${bookId}`] = null;
-            }
-        });
-
-        await update(ref(db), updates);
+      try {
+        await bookListDAO.atualizarLivrosDaLista(currentUser.uid, selectedListId, selectedBooks);
 
         setLists((prevLists) => {
-            const updatedListBooks = { ...selectedBooks };
-            const cleanedBooks = Object.keys(updatedListBooks)
-                .filter((bookId) => updatedListBooks[bookId])
-                .reduce((acc, bookId) => {
-                    acc[bookId] = true;
-                    return acc;
-                }, {});
+          const updatedListBooks = { ...selectedBooks };
+          const cleanedBooks = Object.keys(updatedListBooks)
+            .filter((bookId) => updatedListBooks[bookId])
+            .reduce((acc, bookId) => {
+              acc[bookId] = true;
+              return acc;
+            }, {});
 
-            return {
-                ...prevLists,
-                [selectedListId]: {
-                    ...prevLists[selectedListId],
-                    books: cleanedBooks,
-                },
-            };
+          return {
+            ...prevLists,
+            [selectedListId]: {
+              ...prevLists[selectedListId],
+              books: cleanedBooks,
+            },
+          };
         });
 
         handleCloseModal();
+      } catch (error) {
+        console.error("Erro ao salvar livros na lista:", error);
+      }
+    }
+  }
+
+  const handleDeleteList = async (listId) => {
+    if (currentUser && listId) {
+        try {
+            await bookListDAO.excluirLista(currentUser.uid, listId);
+            setLists((prevLists) => {
+                const updatedLists = { ...prevLists };
+                delete updatedLists[listId];
+                return updatedLists;
+            });
+        } catch (error) {
+            console.error("Erro ao excluir lista:", error);
+        }
     }
   }
 
@@ -144,7 +140,8 @@ export default function BookList() {
                   </div>
                 ))}
               </div>
-              <button onClick={() => handleOpenModal(listId)}>Adicionar/Editar Livros</button>
+              <button onClick={() => handleOpenModal(listId)}>Adicionar Livros</button>
+              <button className="delete-list-btn" onClick={() => handleDeleteList(listId)}>Excluir</button>
             </div>
           ))}
         </div>

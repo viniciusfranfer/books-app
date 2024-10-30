@@ -1,32 +1,30 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, get } from 'firebase/database';
+// import { getDatabase, ref, get } from 'firebase/database';
 import { useAuth } from '../utils/context/authContext/index';
 import NavBar from '../components/NavBar';
+import BookDAO from '../model/BookDAO';
 import './styles/Books.css';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Books() {
-    const [bookData, setBookData] = useState([]); // Inicializar como array vazio
+    const [bookData, setBookData] = useState([]); 
     const { currentUser } = useAuth();
     const navigate = useNavigate();    
 
     useEffect(() => {
-        const fetchBookData = async () => {
+        const fetchBooks = async () => {
             if (currentUser) {
-                const db = getDatabase();
-                const dbRef = ref(db, `livros/${currentUser.uid}`);
-                const snapshot = await get(dbRef);
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    const booksList = data ? Object.values(data) : [];
+                const bookDAO = new BookDAO();
+                try {
+                    const booksList = await bookDAO.obterLivrosDoUsuario(currentUser.uid);
                     setBookData(booksList);
-                } else {
-                    console.log("No data available");
+                } catch (error) {
+                    console.error("Erro ao buscar os livros:", error);
                 }
             }
         };
 
-        fetchBookData();
+        fetchBooks();
     }, [currentUser]);
 
     const handleBookClick = (bookId) => {
