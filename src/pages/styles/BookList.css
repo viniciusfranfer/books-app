@@ -1,0 +1,78 @@
+/* BookList.css */
+.list-container {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.create-list {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .create-list input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 5px;
+  }
+
+.create-list button {
+    padding: 10px;
+    background-color: #004aad;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .existing-lists {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    max-width: 100%;
+  }
+  
+  .list-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 90%;
+  }
+  
+  .books-in-list {
+    margin: 10px 0;
+  }
+  
+  .book-item {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+
+.book-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  
+  .book-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 8px 12px;
+    background-color: #004aad;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

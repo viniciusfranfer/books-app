@@ -1,0 +1,36 @@
+.add-book-container {
+    padding: 15px;
+}
+
+.add-book-container h2 {
+    text-align: center;
+    margin: 20px 0 0;
+}
+
+.add-book-form {
+    margin: 0 auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-book-form select {
+    width: 50%;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.cover-pic {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    margin: 0 auto 20px auto;
+    border-radius: 4px;
+    display: block;
+}
+

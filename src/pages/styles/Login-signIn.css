@@ -1,0 +1,180 @@
+.auth-panel {
+    width: 100%;
+    margin: 80px auto;
+    background-color: #f4f4f9;
+}
+
+.icons {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.login-logo {
+    width: 40%;
+    margin: 0 auto 30px;
+}
+
+.auth-panel .img-cont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-label-cont {
+    padding: 0.5rem;
+    width: 50%;
+    border-radius: 5px;
+    background-color: rgb(221, 221, 221);
+    display: flex;
+    flex-direction: row;
+    border: 1px solid var(rgb(255, 0, 0));
+}
+
+.input-cont {
+    width: 100%;
+    display: flex;
+    /* background-color: aqua; */
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(rgb(255, 0, 0));
+}
+
+.input-label-cont input {
+    width: 100%;
+    padding: 5px;
+    background: transparent;
+    padding: 1px 2px;
+    color: var(grey);
+}
+
+.input-label-cont igrey {
+    color: var(rgb(196, 173, 173));
+} 
+
+.input-label-cont img.icons {
+    fill: var(grey);
+} 
+
+.input-label-cont .input-cont .eye-cont {
+    width: 20px;
+    aspect-ratio: 1;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.separador {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+}
+
+.separador span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    font-size: 16px;
+    flex: .2 0 auto;
+}
+
+.separador span::before, .separador span::after {
+    content: "";
+    background: #000000;
+    height: 1.5px;
+    width: 140%;
+    flex: 1 0 auto;
+    border-radius: 50px;
+    margin: 0 10px;
+}
+
+.btn-cont-auth {
+    width: 50%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-cont-auth .btns {
+    width: 100%;
+    padding: 5px 10px;
+    border: none;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-cont-auth .google-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.btnGoogle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signIn {
+    background-color: #004aad;
+}
+
+.errors {
+    color: rgb(231, 23, 23);
+    font-size: 14px;
+    margin: 0 auto;
+}
+
+/* Media query for screens below 380px width */
+@media (max-width: 380px) {
+    .auth-panel {
+        margin: 40px auto;
+    }
+
+    .login-logo {
+        width: 60%;
+        margin: 0 auto 20px;
+    }
+
+    .input-label-cont {
+        width: 80%;
+        padding: 0.4rem;
+    }
+
+    .separador {
+        width: 90%;
+    }
+
+    .btn-cont-auth {
+        width: 80%;
+    }
+
+    .btn-cont-auth .btns {
+        font-size: 14px;
+        padding: 4px 8px;
+    }
+}

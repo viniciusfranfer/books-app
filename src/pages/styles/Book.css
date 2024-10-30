@@ -1,0 +1,90 @@
+.book-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 500px;
+}
+
+.book-info {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.book-info p {
+    text-wrap: wrap;
+    overflow: hidden;
+}
+
+.book-image {
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    margin: 20px auto 20px auto;
+    border-radius: 4px;
+    display: block;
+}
+
+h2 {
+    margin: 10px 0;
+}
+
+p {
+    margin: 5px 0;
+}
+
+.book-details-container input, .book-details-container textarea, .book-details-container select {
+    margin: 5px 0;
+    padding: 8px;
+    width: 95%;
+    max-width: 400px;
+}
+
+.book-details-container button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.book-details-container button + button {
+    margin-left: 10px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px; 
+}
+
+.btn-save, .btn-cancel {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.btn-save {
+    background-color: #45a549; 
+    color: white;
+}
+
+.btn-cancel {
+    /* background-color: #f44336;  */
+    color: rgb(0, 0, 0);
+} 
+
+.btn-edit, .btn-delete {
+    width: 40px;
+    margin: 15px 0 0;
+    padding: 10px 20px;
+    text-decoration: none; 
+    color: #fff;
+    background-color: #004aad;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+

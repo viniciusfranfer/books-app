@@ -1,0 +1,93 @@
+/* Estilos gerais da navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    max-width: 100%;
+    background-color: #004aad;
+    color: #fff;
+    margin: 0;
+  }
+  
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+    width: 100px;
+  }
+  
+  /* Estilos para o menu hambúrguer */
+  .menu-icon {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+  }
+  
+  .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    transition: 0.3s;
+  }
+  
+  /* Transformação das barras em X quando o menu é aberto */
+  .bar.open:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .bar.open:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .bar.open:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  
+  /* Links do menu escondidos por padrão */
+  .nav-links-navBar {
+    list-style-type: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #004aad;
+    width: 100%;
+    max-width: 200px;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+  }
+  
+  /* Mostrar o menu */
+  .nav-links-navBar.show {
+    height: auto;
+    padding: 0;
+  }
+  
+  /* Links de navegação */
+  .nav-links-navBar li {
+    text-align: center;
+    padding: 12px;
+  }
+
+  .link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    display: block;
+    text-align: center;
+    padding: 12px;
+  }
+  
+  .nav-links-navBar li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    display: block;
+  }
+  
+  .nav-links-navBar li a:hover {
+    background-color: #444;
+  }
+  
+  

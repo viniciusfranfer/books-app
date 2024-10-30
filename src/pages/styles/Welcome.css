@@ -1,0 +1,46 @@
+.welcome {
+    background-color: #f4f4f9;
+}
+div.welcome-panel {
+    width: 80%;
+    height: 80%;
+    margin: 150px auto;
+
+}
+
+.welcome-logo {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+div.img-cont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: 25% 0 45% 0; */
+}
+
+div.btn-cont {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+div.btn-cont .btnsWelcome {
+    width: 50%;
+    padding: 5px 10px;
+    border: none;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #004aad;
+}

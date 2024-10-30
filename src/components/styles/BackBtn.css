@@ -1,0 +1,10 @@
+.back-btn {
+    margin: 10px auto;
+    padding: 8px 18px;
+    text-size-adjust: 100%;
+    text-decoration: none;
+    color: #fff;
+    background-color: #004aad;
+    border-radius: 5px;
+    font-size: 14px;
+}
