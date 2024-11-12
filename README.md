@@ -1,5 +1,7 @@
 # Book App 📚
 
+(Mobile web version) : https://prjt-7dd79.firebaseapp.com
+
 ## Descrição 
 
 Este é um aplicativo mobile de livros desenvolvido com React JS e integrando Firebase para funcionalidades de backend. A aplicação permite aos usuários gerenciar uma coleção de livros e acessar detalhes sobre cada livro. Essa aplicação foi projetada para estudo e aprendizado de tecnologias modernas em desenvolvimento de aplicativos e integração de serviços Firebase.
