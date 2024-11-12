@@ -1,70 +1,16 @@
-# Getting Started with Create React App
+Book App 📚
+Descrição: Este é um aplicativo mobile de livros desenvolvido com React JS e integrando Firebase para funcionalidades de backend. A aplicação permite aos usuários gerenciar uma coleção de livros e acessar detalhes sobre cada livro. Essa aplicação foi projetada para estudo e aprendizado de tecnologias modernas em desenvolvimento de aplicativos e integração de serviços Firebase.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Tecnologias Utilizadas
+React JS: Para desenvolvimento da interface mobile, usando componentes que permitem navegação, formulários e visualização dinâmica de listas.
+Firebase Realtime Database: Usado para armazenar dados dos livros, informações de usuários, progresso de leitura, e atualizações em tempo real. Cada interação do usuário é sincronizada instantaneamente.
+Firebase Authentication: Gerencia o login de usuários com Google e e-mail/senha, garantindo uma experiência segura e acessível.
+Firebase Storage: Armazena imagens de capa de cada livro, permitindo que os usuários façam upload de suas próprias imagens para personalizar seus perfis e coleções.
+React Router: Gerencia a navegação entre páginas da aplicação web, permitindo transições suaves entre home, biblioteca do usuário, detalhes dos livros, etc.
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Funcionalidades
+Cadastro e Login: Autenticação de usuários por e-mail e Google.
+Adicionar livros: Usuário adiciona os livros de acordo com sua vontade.
+Feed de Livros: Exibição de uma lista de livros com filtros de gênero.
+Detalhes do Livro: Mostra as informações detalhadas do livro (descrição, autor, etc.).
+Upload de Capas e Avatares: Upload de imagens no Firebase Storage para personalizar capas de livros e o perfil do usuário.
